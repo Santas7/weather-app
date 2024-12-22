@@ -30,6 +30,7 @@ body {
     font-family: 'Roboto', sans-serif;
     text-align: center;
     color: orange;
+    font-size: 4rem;
     opacity: 0;
     animation: fade 2s ease-in-out 0.5s forwards;
 }
@@ -37,7 +38,7 @@ body {
 .button {
     border: 1px solid #fff;
     border-radius: 15px;
-    padding: 3.5rem 3.5rem;
+    padding: 6rem 6rem;
     margin: 10px;
     background: #6a6a6a;
     opacity: 0;
@@ -52,11 +53,15 @@ body {
 
 
 #volume {
-    max-width: 6rem;
+    max-width: 12rem;
     opacity: 0;
     animation: fade 2s ease-in-out 1.5s forwards;
 }
 
+.icon {
+    width: 4rem;
+    height: 4rem;
+}
 
 @keyframes fade {
     from {

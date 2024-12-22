@@ -1,25 +1,65 @@
-import './styles/styles.scss';
+import './styles/styles.scss'
 
-import rainSound from './assets/sounds/rain.mp3';
-import summerSound from './assets/sounds/summer.mp3';
-import winterSound from './assets/sounds/winter.mp3';
+import rainSound from './assets/sounds/rain.mp3'
+import summerSound from './assets/sounds/summer.mp3'
+import winterSound from './assets/sounds/winter.mp3'
 
-import rainIcon from './assets/icons/cloud-rain.svg';
-import summerIcon from './assets/icons/sun.svg';
-import winterIcon from './assets/icons/cloud-snow.svg';
-import pauseIcon from './assets/icons/pause.svg';
+import rainIcon from './assets/icons/cloud-rain.svg'
+import summerIcon from './assets/icons/sun.svg'
+import winterIcon from './assets/icons/cloud-snow.svg'
+import pauseIcon from './assets/icons/pause.svg'
 
-import rainBg from './assets/images/rainy-bg.jpg';
-import summerBg from './assets/images/summer-bg.jpg';
-import winterBg from './assets/images/winter-bg.jpg';
+import rainBg from './assets/images/rainy-bg.jpg'
+import summerBg from './assets/images/summer-bg.jpg'
+import winterBg from './assets/images/winter-bg.jpg'
 
 
-const app = document.getElementById('app');
+const app = document.getElementById('app')
+let audio = new Audio('')
 
-let audio = new Audio('');
-let statusAudio = false
-function setStatusAudio() { statusAudio = !statusAudio }
+function initialState(others) {
+    return {
+        status: false,
+        setStatus: function () { 
+            this.status = !this.status
+            this.icon = (this.oldIcon === this.icon)
+                ? pauseIcon 
+                : this.oldIcon
+        },
+        icon: others.icon,
+        oldIcon: others.icon,
+        audioSource: others.audioSource,
+        bg: others.bg
+    }
+}
 
+let globalStates = [
+    initialState({audioSource: rainSound, icon: rainIcon, bg: rainBg}),
+    initialState({audioSource: summerSound, icon: summerIcon, bg: summerBg}),
+    initialState({audioSource: winterSound, icon: winterIcon, bg: winterBg})
+]
+
+function resetGlobalStates(id) {
+    globalStates = globalStates.map((state, idx) => {
+        if (state.status === true && idx !== Number(id)) {
+            state.setStatus()
+            const icon = document.getElementById(`${idx}-icon`)
+            icon.src = state.oldIcon
+            icon.alt = `icon ${idx}`
+        }
+        return state
+    });
+
+    if (!audio.paused && id !== audio.getAttribute('data-id')) {
+        audio.pause()
+        audio.currentTime = 0
+    }
+}
+
+
+function removeChildsElement(element) {
+    while (element.firstChild) element.removeChild(element.lastChild)
+}
 
 function createCustomElement(type, id, className = null, others = {}) {
     const elem = document.createElement(type)
@@ -27,46 +67,56 @@ function createCustomElement(type, id, className = null, others = {}) {
     if (className) {
         elem.className = className
         if (className === 'button') {
-            elem.onclick = () => { 
-                audio.src = others.audioSource
-                if (!statusAudio) {
-                    audio.play()
-                    setStatusAudio()
+            let state = globalStates[Number(id)]
+            elem.onclick = () => {
+                resetGlobalStates(id)
+                audio.src = state.audioSource
+                audio.setAttribute('data-id', id)
+                state.setStatus();
+                const icon = document.getElementById(`${id}-icon`)
+                if (state.status) {
+                    icon.src = state.icon
+                    icon.alt = `pause icon ${id}`
+                    audio.play();
+                    document.body.style.backgroundImage = `url(${state.bg})`
                 } else {
+                    icon.src = state.icon;
+                    icon.alt = `icon ${id}`
                     audio.pause()
-                    setStatusAudio()
                 }
-                
             }
+            const icon = createCustomElement('img', `${id}-icon`, 'icon', { src: state.icon, alt: `icon ${id}` })
+            removeChildsElement(elem)
+            elem.appendChild(icon)
+            
         }
     }
-
-    if (others) {
-        for (let key in others) elem[key] = others[key]
-    }
+    if (others) 
+        for (let key in others) 
+            elem[key] = others[key]
     return elem
 }
 
+
 const header = createCustomElement('h1', 'header', null, {textContent: 'Weather Sounds'})
-const containerButtons = createCustomElement('div', 'buttons', 'container')
 const containerVolume = createCustomElement('div', null, 'container')
-const buttonRain = createCustomElement('div', 'button-rain', 'button', {audioSource: rainSound});
-const buttonSummer = createCustomElement('div', 'button-summer', 'button', {audioSource: summerSound});
-const buttonWinter = createCustomElement('div', 'button-winter', 'button', {audioSource: winterSound});
+const containerButtons = createCustomElement('div', 'buttons', 'container')
+const buttonRain = createCustomElement('div', '0', 'button', {audioSource: rainSound, icon: rainIcon, bg: rainBg})
+const buttonSummer = createCustomElement('div', '1', 'button', {audioSource: summerSound, icon: summerIcon, bg: summerBg})
+const buttonWinter = createCustomElement('div', '2', 'button', {audioSource: winterSound, icon: winterIcon, bg: winterBg})
 const controllerVolume = createCustomElement('input', 'volume', null, {
     type: 'range',
-    min: 1,
-    max: 100,
-    step: 1,
-    value: 50
+    min: 0,
+    max: 1,
+    step: 0.1,
+    value: 0.5,
+    oninput: () => (audio ? (audio.volume = controllerVolume.value) : null),
 });
 
 containerButtons.appendChild(buttonSummer)
 containerButtons.appendChild(buttonRain)
 containerButtons.appendChild(buttonWinter)
-
 containerVolume.appendChild(controllerVolume)
-
 app.appendChild(header)
 app.appendChild(containerButtons)
 app.appendChild(containerVolume)
