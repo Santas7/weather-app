@@ -1,25 +1,25 @@
-import path from 'path';
-import HtmlWebpackPlugin from 'html-webpack-plugin';
-import MiniCssExtractPlugin from 'mini-css-extract-plugin';
-import CopyPlugin from 'copy-webpack-plugin';
-import ESLintPlugin from 'eslint-webpack-plugin';
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
+const ESLintPlugin = require('eslint-webpack-plugin')
 
-export default {
-    context: path.resolve('src'),
+module.exports = {
+    context: path.resolve(__dirname, 'src'),
     entry: './index.js',
     output: {
         filename: '[name].[contenthash].js',
-        path: path.resolve('dist'),
+        path: path.resolve(__dirname, 'dist'),
         clean: true,
     },
     plugins: [
         new HtmlWebpackPlugin({
-            template: path.resolve('public/index.html'),
+            template: path.resolve(__dirname, 'public/index.html'),
         }),
         new MiniCssExtractPlugin(),
         new CopyPlugin({
             patterns: [
-              { from: path.resolve('public/favicon.ico'), to: path.resolve('dist')},
+              { from: path.resolve(__dirname, 'public/favicon.ico'), to: path.resolve('dist')},
             ],
         }),
         new ESLintPlugin({
