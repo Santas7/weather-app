@@ -41,8 +41,6 @@ function createCustomElement(type, id, className = null, others = {}) {
             }
         }
     }
-    
-    
 
     if (others) {
         for (let key in others) elem[key] = others[key]
