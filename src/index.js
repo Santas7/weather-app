@@ -12,7 +12,6 @@ import pauseIcon from './assets/icons/pause.svg';
 import rainBg from './assets/images/rainy-bg.jpg';
 import summerBg from './assets/images/summer-bg.jpg';
 import winterBg from './assets/images/winter-bg.jpg';
-import { createElement } from 'react';
 
 
 const app = document.getElementById('app');
