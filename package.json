@@ -4,12 +4,15 @@
   "description": "",
   "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npx webpack serve --config webpack.config.dev.js",
+    "build": "npx webpack --config webpack.config.prod.js",
+    "build:dev": "npx webpack --config webpack.config.dev.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "eslint": "^8.57.1",
     "eslint-config-airbnb": "^19.0.4",
