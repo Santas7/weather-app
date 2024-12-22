@@ -13,5 +13,14 @@ module.exports = {
         new HtmlWebpackPlugin({
             template: path.resolve(__dirname, 'public/index.html'),
         }),
-    ]
+        new MiniCssExtractPlugin()
+    ],
+    module: {
+        rules: [
+            {
+                test: /\.s[ac]ss$/,
+                use: [MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'],
+            }
+        ],
+    }
 };
