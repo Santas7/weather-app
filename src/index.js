@@ -28,6 +28,12 @@ function initialState(others) {
             this.icon = (this.oldIcon === this.icon)
                 ? pauseIcon 
                 : this.oldIcon
+            document.body.style.setProperty('--bg-image', `url(${this.bg})`)
+            if (this.status) {
+                document.body.style.setProperty('--bg-blur', 'none')
+            } else {
+                document.body.style.setProperty('--bg-blur', 'blur(5px)') 
+            }
         },
         icon: others.icon,
         oldIcon: others.icon,
