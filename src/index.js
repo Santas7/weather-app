@@ -16,51 +16,36 @@ import winterBg from './assets/images/winter-bg.jpg';
 
 const app = document.getElementById('app');
 
-// header 
-const header = document.createElement('h1')
-header.id = 'header'
-header.textContent = 'Weather Sounds'
 
 
-// container buttons
-const containerButtons = document.createElement('div')
-containerButtons.id = 'buttons'
-containerButtons.className = 'container'
+function createCustomElement(type, id, className = null, action = null, others = {}) {
+    const elem = document.createElement(type)
+    elem.id = id
+    if (className) elem.className = className
+    if (action) elem.onclick = action
+    if (others) {
+        for (let key in others) elem[key] = others[key]
+    }
+    return elem
+}
 
-// container for controller volume
-const containerVolume = document.createElement('div')
-containerVolume.className = 'container'
+const header = createCustomElement('h1', 'header', null, null, {textContent: 'Weather Sounds'})
+const containerButtons = createCustomElement('div', 'buttons', 'container', null, {})
+const containerVolume = createCustomElement('div', null, 'container', null, {})
+const buttonRain = createCustomElement('button', 'button-rain', 'button', () => alert('rain'));
+const buttonSummer = createCustomElement('button', 'button-summer', 'button', () => alert('summer'));
+const buttonWinter = createCustomElement('button', 'button-winter', 'button', () => alert('winter'));
+const controllerVolume = createCustomElement('input', 'volume', null, null, {
+    type: 'range',
+    min: 1,
+    max: 100,
+    step: 1,
+    value: 50
+});
 
-
-// buttons wheather's
-const button_rain = document.createElement('button')
-button_rain.id = 'button-rain'
-button_rain.className = 'button'
-button_rain.onclick = () => {alert('rain')}
-
-const button_summer = document.createElement('button')
-button_summer.id = 'button-summer'
-button_summer.className = 'button'
-button_summer.onclick = () => {alert('summer')}
-
-const button_winter = document.createElement('button')
-button_winter.id = 'button-winter'
-button_winter.className = 'button'
-button_winter.onclick = () => {alert('winter')}
-
-// controller
-const controllerVolume = document.createElement('input')
-controllerVolume.id = 'volume'
-controllerVolume.min = 1
-controllerVolume.max = 100
-controllerVolume.type = 'range'
-controllerVolume.step = 1
-controllerVolume.value = 50
-
-
-containerButtons.appendChild(button_summer)
-containerButtons.appendChild(button_rain)
-containerButtons.appendChild(button_winter)
+containerButtons.appendChild(buttonSummer)
+containerButtons.appendChild(buttonRain)
+containerButtons.appendChild(buttonWinter)
 
 containerVolume.appendChild(controllerVolume)
 
