@@ -1,0 +1,50 @@
+@font-face {
+    font-family: 'Roboto';
+    src: url('../assets/fonts/Roboto-Bold.ttf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: black;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+#header { 
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+    color: orange;
+}
+
+.button {
+    border: 1px solid #fff;
+    border-radius: 15px;
+    padding: 3.5rem 3.5rem;
+    margin: 10px;
+    background: #6a6a6a;
+    transition: transform 0.3s ease-in-out;
+}
+
+.button:hover {
+    transform: scale(1.05);
+    cursor: pointer;
+}
+
+
+#volume {
+    max-width: 6rem;
+}
