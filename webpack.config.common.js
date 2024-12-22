@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
-
+const ESLintPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
@@ -22,6 +22,10 @@ module.exports = {
               { from: path.resolve(__dirname, 'public/favicon.ico'), to: path.resolve('dist')},
             ],
         }),
+        new ESLintPlugin({
+            extensions: ['js'], 
+            fix: true, 
+        })
     ],
     module: {
         rules: [
