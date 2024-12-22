@@ -22,12 +22,16 @@ body {
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    opacity: 0;
+    animation: fade 2s ease-in-out 1.5s forwards;
 }
 
 #header { 
     font-family: 'Roboto', sans-serif;
     text-align: center;
     color: orange;
+    opacity: 0;
+    animation: fade 2s ease-in-out 0.5s forwards;
 }
 
 .button {
@@ -36,6 +40,8 @@ body {
     padding: 3.5rem 3.5rem;
     margin: 10px;
     background: #6a6a6a;
+    opacity: 0;
+    animation: fade 2s ease-in-out 1s forwards;
     transition: transform 0.3s ease-in-out;
 }
 
@@ -47,4 +53,16 @@ body {
 
 #volume {
     max-width: 6rem;
+    opacity: 0;
+    animation: fade 2s ease-in-out 1.5s forwards;
+}
+
+
+@keyframes fade {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
