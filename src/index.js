@@ -13,6 +13,7 @@ import './styles/styles.scss';
 
 const app = document.getElementById('app')
 let audio = new Audio('')
+
 let globalStates = [
   initialState({audioSource: summerSound, icon: summerIcon, bg: summerBg}),
   initialState({audioSource: rainSound, icon: rainIcon, bg: rainBg}),
