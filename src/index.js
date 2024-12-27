@@ -23,17 +23,11 @@ let globalStates = [
 function initialState(others) {
   return {
     status: false,
-    setStatus: function () { 
+    setStatus: function () {
       this.status = !this.status;
-      this.icon = (this.oldIcon === this.icon)
-        ? pauseIcon 
-        : this.oldIcon;
+      this.icon = this.icon === this.oldIcon ? pauseIcon : this.oldIcon;
       document.body.style.setProperty('--bg-image', `url(${this.bg})`);
-      if (this.status) {
-        document.body.style.setProperty('--bg-blur', 'none');
-      } else {
-        document.body.style.setProperty('--bg-blur', 'blur(5px)'); 
-      }
+      document.body.style.setProperty('--bg-blur', this.status ? 'none' : 'blur(5px)');
     },
     icon: others.icon,
     oldIcon: others.icon,
