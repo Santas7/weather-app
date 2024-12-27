@@ -105,7 +105,7 @@ function createCustomElement(type, id, className = null, others = {}, styles = {
 
 
 function render() {
-  var header = createCustomElement('h1', 'header', null, {textContent: 'Weather Sounds'}),
+  let header = createCustomElement('h1', 'header', null, {textContent: 'Weather Sounds'}),
     containerVolume = createCustomElement('div', null, 'container'),
     containerButtons = createCustomElement('div', 'buttons', 'container'),
     buttons = [
