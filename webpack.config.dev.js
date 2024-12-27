@@ -1,5 +1,6 @@
-const { merge } = require('webpack-merge');
-const commonConfig = require('./webpack.config.common');
+const { merge } = require('webpack-merge')
+const commonConfig = require('./webpack.config.common')
+const webpack = require('webpack')
 
 module.exports = merge(commonConfig, {
     mode: 'development',
@@ -9,4 +10,7 @@ module.exports = merge(commonConfig, {
         hot: true,
         open: true,
     },
+    plugins: [
+        new webpack.HotModuleReplacementPlugin()
+    ]
 });
