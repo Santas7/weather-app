@@ -11,18 +11,19 @@ import winterBg from './assets/images/winter-bg.jpg';
 import './styles/styles.scss';
 
 
-const app = document.getElementById('app');
-let audio = new Audio('');
+const app = document.getElementById('app')
+let audio = new Audio('')
 let globalStates = [
   initialState({audioSource: summerSound, icon: summerIcon, bg: summerBg}),
   initialState({audioSource: rainSound, icon: rainIcon, bg: rainBg}),
   initialState({audioSource: winterSound, icon: winterIcon, bg: winterBg})
-];
+]
+
 const sounds = [
   { audioSource: summerSound, icon: summerIcon, bg: summerBg },
   { audioSource: rainSound, icon: rainIcon, bg: rainBg },
   { audioSource: winterSound, icon: winterIcon, bg: winterBg },
-];
+]
 
 
 function initialState({ audioSource, icon, bg }) {
@@ -51,6 +52,7 @@ function resetGlobalStates(id) {
       icon.alt = `icon ${idx}`;
     }
   })
+
   if (!audio.paused && id !== audio.getAttribute('data-id')) {
     audio.pause();
     audio.currentTime = 0;
@@ -81,6 +83,7 @@ function render() {
       src: data.icon,
       alt: `icon ${idx}`,
     })
+    
     button.appendChild(icon)
     containerButtons.appendChild(button)
   })
