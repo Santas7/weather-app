@@ -33,21 +33,19 @@ function initialState(others) {
     oldIcon: others.icon,
     audioSource: others.audioSource,
     bg: others.bg
-  };
+  }
 }
 
 
 function resetGlobalStates(id) {
-  globalStates = globalStates.map((state, idx) => {
-    if (state.status === true && idx !== Number(id)) {
+  globalStates.forEach((state, idx) => {
+    if (state.status && idx !== Number(id)) {
       state.setStatus();
       const icon = document.getElementById(`${idx}-icon`);
       icon.src = state.oldIcon;
       icon.alt = `icon ${idx}`;
     }
-    return state;
-  });
-
+  })
   if (!audio.paused && id !== audio.getAttribute('data-id')) {
     audio.pause();
     audio.currentTime = 0;
