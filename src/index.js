@@ -116,9 +116,7 @@ function render() {
   })
 
   containerVolume.appendChild(controllerVolume)
-  app.appendChild(header)
-  app.appendChild(containerButtons)
-  app.appendChild(containerVolume)
+  app.append(header, containerButtons, containerVolume)
 }
 
 render()
