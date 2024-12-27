@@ -95,25 +95,24 @@ function render() {
   })
 
   containerButtons.addEventListener('click', (event) => {
-    const button = event.target.closest('.button');
-    if (!button) return;
+    const button = event.target.closest('.button')
+    if (!button) 
+      return
   
-    const id = button.id;
-    const state = globalStates[+id];
+    const id = button.id
+    const state = globalStates[+id]
   
-    resetGlobalStates(id);
-    audio.src = state.audioSource;
-    audio.setAttribute('data-id', id);
+    resetGlobalStates(id)
+    audio.src = state.audioSource
+    audio.setAttribute('data-id', id)
   
-    state.setStatus();
-    const icon = document.getElementById(`${id}-icon`);
-    icon.src = state.icon;
-    icon.alt = state.status ? `pause icon ${id}` : `icon ${id}`;
+    state.setStatus()
+    const icon = document.getElementById(`${id}-icon`)
+    icon.src = state.icon
+    icon.alt = state.status ? `pause icon ${id}` : `icon ${id}`
+    state.status ? audio.play() : audio.pause()
+  })
   
-    state.status ? audio.play() : audio.pause();
-  });
-  
-
   containerVolume.appendChild(controllerVolume)
   app.append(header, containerButtons, containerVolume)
 }
