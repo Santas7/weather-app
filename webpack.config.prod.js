@@ -4,4 +4,10 @@ const commonConfig = require('./webpack.config.common');
 
 module.exports = merge(commonConfig, {
     mode: 'production',
+    optimization: {
+        splitChunks: {
+            chunks: 'all', 
+        },
+        minimize: true, 
+    },
 });
