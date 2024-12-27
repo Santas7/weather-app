@@ -63,27 +63,9 @@ function createCustomElement(type, id, className = null, others = {}, styles = {
   if (className) {
     elem.className = className;
     if (className === 'button') {
-      let state = globalStates[Number(id)];
-      elem.onclick = () => {
-        resetGlobalStates(id);
-        audio.src = state.audioSource;
-        audio.setAttribute('data-id', id);
-        state.setStatus();
-        const icon = document.getElementById(`${id}-icon`);
-        if (state.status) {
-          icon.src = state.icon;
-          icon.alt = `pause icon ${id}`;
-          audio.play();
-          document.body.style.backgroundImage = `url(${state.bg})`;
-        } else {
-          icon.src = state.icon;
-          icon.alt = `icon ${id}`;
-          audio.pause();
-        }
-      };
-      const icon = createCustomElement('img', `${id}-icon`, 'icon', { src: state.icon, alt: `icon ${id}` });
-      removeChildsElement(elem);
-      elem.appendChild(icon);
+      const icon = createCustomElement('img', `${id}-icon`, 'icon', { src: globalStates[Number(id)].icon, alt: `icon ${id}` })
+      removeChildsElement(elem)
+      elem.appendChild(icon)
     }
   }
   if (others) 
@@ -116,6 +98,29 @@ function render() {
     });  
   for (let button of buttons) 
     containerButtons.appendChild(button);
+
+  containerButtons.addEventListener('click', (event) => {
+    const button = event.target.closest('.button');
+    if (!button) return; 
+    const id = button.id;
+    const state = globalStates[Number(id)];
+    resetGlobalStates(id);
+    audio.src = state.audioSource;
+    audio.setAttribute('data-id', id);
+    state.setStatus();
+    const icon = document.getElementById(`${id}-icon`)
+    if (state.status) {
+      icon.src = state.icon
+      icon.alt = `pause icon ${id}`
+      audio.play();
+      document.body.style.backgroundImage = `url(${state.bg})`
+    } else {
+      icon.src = state.icon
+      icon.alt = `icon ${id}`
+      audio.pause()
+    }
+  })
+
   containerVolume.appendChild(controllerVolume);
   app.appendChild(header);
   app.appendChild(containerButtons);
