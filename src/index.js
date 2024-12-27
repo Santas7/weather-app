@@ -18,7 +18,7 @@ let globalStates = [
   initialState({audioSource: rainSound, icon: rainIcon, bg: rainBg}),
   initialState({audioSource: winterSound, icon: winterIcon, bg: winterBg})
 ];
-const soundsData = [
+const sounds = [
   { audioSource: summerSound, icon: summerIcon, bg: summerBg },
   { audioSource: rainSound, icon: rainIcon, bg: rainBg },
   { audioSource: winterSound, icon: winterIcon, bg: winterBg },
@@ -75,7 +75,7 @@ function render() {
   const containerVolume = createCustomElement('div', null, 'container');
   const containerButtons = createCustomElement('div', 'buttons', 'container');
 
-  soundsData.forEach((data, idx) => {
+  sounds.forEach((data, idx) => {
     const button = createCustomElement('div', idx, 'button', {}, { backgroundImage: `url(${data.bg})` });
     const icon = createCustomElement('img', `${idx}-icon`, 'icon', {
       src: data.icon,
