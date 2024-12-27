@@ -122,7 +122,6 @@ function render() {
       value: 0.5,
       oninput: () => (audio ? (audio.volume = controllerVolume.value) : null),
     });  
-  console.log(globalStates, buttons);
   for (let button of buttons) 
     containerButtons.appendChild(button);
   containerVolume.appendChild(controllerVolume);
