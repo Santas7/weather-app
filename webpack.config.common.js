@@ -6,9 +6,9 @@ const ESLintPlugin = require('eslint-webpack-plugin')
 
 module.exports = {
     context: path.resolve(__dirname, 'src'),
-    entry: './index.js',
+    entry: './index.ts',
     output: {
-        filename: '[name].[contenthash].js',
+        filename: '[name].[contenthash].ts',
         path: path.resolve(__dirname, 'dist'),
         clean: true,
     },

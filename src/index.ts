@@ -26,8 +26,13 @@ const sounds = [
   { audioSource: winterSound, icon: winterIcon, bg: winterBg },
 ]
 
+interface initialState {
+  audioSource: string
+  icon: string
+  bg: string
+}
 
-function initialState({ audioSource, icon, bg }) {
+function initialState({ audioSource, icon, bg }: initialState) {
   return {
     status: false,
     oldIcon: icon,
@@ -44,7 +49,7 @@ function initialState({ audioSource, icon, bg }) {
 }
 
 
-function resetGlobalStates(id) {
+function resetGlobalStates(id: string) {
   globalStates.forEach((state, idx) => {
     if (state.status && idx !== Number(id)) {
       state.setStatus();
@@ -98,7 +103,8 @@ function render() {
     oninput: () => (audio ? (audio.volume = controllerVolume.value) : null),
   })
 
-  containerButtons.addEventListener('click', (event) => {
+
+  containerButtons.addEventListener('click', (event:) => {
     const button = event.target.closest('.button')
     if (!button) 
       return
