@@ -9,12 +9,13 @@ import rainBg from './assets/images/rainy-bg.jpg';
 import summerBg from './assets/images/summer-bg.jpg';
 import winterBg from './assets/images/winter-bg.jpg';
 import './styles/styles.scss';
+import {idAndClass} from './core/types/types-code/index-types';
 
 
-const app = document.getElementById('app')
-let audio = new Audio('')
+const app = document.getElementById('app') as HTMLElement
+const audio = new Audio('')
 
-let globalStates = [
+const globalStates = [
   initialState({audioSource: summerSound, icon: summerIcon, bg: summerBg}),
   initialState({audioSource: rainSound, icon: rainIcon, bg: rainBg}),
   initialState({audioSource: winterSound, icon: winterIcon, bg: winterBg})
@@ -53,9 +54,11 @@ function resetGlobalStates(id: string) {
   globalStates.forEach((state, idx) => {
     if (state.status && idx !== Number(id)) {
       state.setStatus();
-      const icon = document.getElementById(`${idx}-icon`);
-      icon.src = state.oldIcon;
-      icon.alt = `icon ${idx}`;
+      const icon = document.getElementById(`${idx}-icon`) as HTMLImageElement | null;
+      if (icon) {
+        icon.src = state.oldIcon;
+        icon.alt = `icon ${idx}`;
+      }
     }
   })
 
@@ -67,7 +70,7 @@ function resetGlobalStates(id: string) {
 
 
 
-function createCustomElement(type, id, className, others = {}, styles = {}) {
+function createCustomElement(type: string, id: idAndClass, className: idAndClass, others: object = {}, styles: object = {}) {
   const elem = Object.assign(document.createElement(type), { 
     id, 
     className, 
@@ -100,12 +103,12 @@ function render() {
     max: 1,
     step: 0.1,
     value: 0.5,
-    oninput: () => (audio ? (audio.volume = controllerVolume.value) : null),
+    oninput: () => (audio ? (audio.volume = Number((controllerVolume as HTMLInputElement).value)) : null),
   })
 
 
-  containerButtons.addEventListener('click', (event:) => {
-    const button = event.target.closest('.button')
+  containerButtons.addEventListener('click', (event: MouseEvent) => {
+    const button = (event.target as HTMLElement).closest('.button')
     if (!button) 
       return
   
@@ -117,10 +120,13 @@ function render() {
     audio.setAttribute('data-id', id)
   
     state.setStatus()
-    const icon = document.getElementById(`${id}-icon`)
-    icon.src = state.icon
-    icon.alt = state.status ? `pause icon ${id}` : `icon ${id}`
-    state.status ? audio.play() : audio.pause()
+    const icon = document.getElementById(`${id}-icon`) as HTMLImageElement | null
+    if (icon) {
+      icon.src = state.icon
+      icon.alt = state.status ? `pause icon ${id}` : `icon ${id}`
+    }
+    if (state.status) audio.play();
+    else audio.pause();  
   })
   
   containerVolume.appendChild(controllerVolume)

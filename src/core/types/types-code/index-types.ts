@@ -1,0 +1,1 @@
+export type idAndClass = number | string | null
